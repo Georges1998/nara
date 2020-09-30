@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nara/view/components/top-bar-buttons.component.dart';
 
 class MainPage extends StatefulWidget {
   static String routeName = "/main";
@@ -11,49 +12,54 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
+enum Status { firstPage, secondPage, terrace }
+
 class _MainPageState extends State<MainPage> {
+  Status page = Status.firstPage;
+  int pageIndex = 0;
+
+  onPageChanged(int pageIndex) {
+    setState(() {
+      this.pageIndex = pageIndex;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          '''Nara Lounge        
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            '''Nara Lounge        
 ${DateTime.now().toString().substring(0, 10)} ''',
-          style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: [ 
+            this.page == Status.terrace ? TopBarButton(
+                () => setState(() {
+                      this.page = Status.firstPage;
+                    }),
+                'Resto') :TopBarButton(
+                () => setState(() {
+                      this.page = Status.terrace;
+                    }),
+                'Terrace'),
+            TopBarButton(() => print('Delievery'), 'Delievery'),
+            TopBarButton(() => print('UberEats'), 'UberEats'),
+          ],
+          backgroundColor: Colors.black87,
         ),
-        actions: [
-          TopBarButton(() => print('Terrace'), 'Terrace'),
-          TopBarButton(() => print('Delievery'), 'Delievery'),
-          TopBarButton(() => print('UberEats'), 'UberEats'),
-        ],
-        backgroundColor: Colors.black87,
-      ),
-    );
+        body: chooseWidget());
   }
-}
 
-class TopBarButton extends StatelessWidget {
-  final Function event;
-  final String text;
-
-  const TopBarButton(
-    this.event,
-    this.text, {
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30),
-      child: FlatButton(
-        onPressed: this.event,
-        child: Text(
-          text,
-          style: TextStyle(color: Colors.white, fontSize: 30),
-        ),
-      ),
-    );
+  Widget chooseWidget() {
+    switch (page) {
+      case Status.secondPage:
+        return Text("This is Second Page");
+      case Status.terrace:
+        return Text("This is Terrace");
+      default:
+        return Text("This is First Page");
+    }
   }
 }

@@ -1,4 +1,4 @@
-#Tue Sep 29 21:44:37 EDT 2020
+#Wed Sep 30 17:25:40 EDT 2020
 base.0=/Users/georgekandalaft/github/nara/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
