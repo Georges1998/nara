@@ -70,8 +70,8 @@ ${DateTime.now().toString().substring(0, 10)} ''',
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          padding: const EdgeInsets.only(top: 50.0),
-          width: 900,
+          padding: const EdgeInsets.only(top: 10.0),
+          width: 800,
           child: GridView.count(
             crossAxisCount: 5,
             children: List.generate(15, (index) {
@@ -124,8 +124,8 @@ ${DateTime.now().toString().substring(0, 10)} ''',
               borderRadius: BorderRadius.circular(50), color: Colors.black87),
         ),
         Container(
-          padding: const EdgeInsets.only(top: 50.0),
-          width: 900,
+          padding: const EdgeInsets.only(top: 10.0),
+          width: 800,
           child: GridView.count(
             crossAxisCount: 5,
             children: List.generate(15, (index) {

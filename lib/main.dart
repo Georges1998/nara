@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nara/view/pages/main-page.dart';
+import 'package:nara/view/pages/table-page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         initialRoute: MainPage.routeName,
         routes: {
           MainPage.routeName: (context) => MainPage(),
+          TablePage.routeName: (context) => TablePage(),
         },
         title: 'Nara');
   }
