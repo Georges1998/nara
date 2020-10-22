@@ -12,6 +12,7 @@ class TablePage extends StatefulWidget {
 }
 
 class _TablePageState extends State<TablePage> {
+  String menueType = 'Sandwiches';
   @override
   Widget build(BuildContext context) {
     final TableClass table = ModalRoute.of(context).settings.arguments;
@@ -38,7 +39,63 @@ class _TablePageState extends State<TablePage> {
               stops: [0.0, 1.0],
               tileMode: TileMode.clamp),
         ),
-        child: Text(table.id.toString()),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(255, 255, 255, 0.5)),
+                child: Column(
+                  children: [
+                    Container(
+                      color: Colors.white,
+                      height: 60,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          for (var i in [
+                            "Sandwiches",
+                            "Shisha",
+                            "Desert",
+                            "Meal",
+                            "Drinks",
+                            "Breakfast"
+                          ])
+                            FlatButton(
+                              onPressed: () => {
+                                setState(() {
+                                  this.menueType = i;
+                                  print(this.menueType);
+                                })
+                              },
+                              child: Text(
+                                i,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                width: MediaQuery.of(context).size.width * 0.60,
+                //color: Color.fromRGBO(255, 155, 255, 0.5),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color.fromRGBO(255, 255, 255, 0.5)),
+                width: MediaQuery.of(context).size.width * 0.35,
+                // color: Color.fromRGBO(255, 255, 255, 0.5),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
