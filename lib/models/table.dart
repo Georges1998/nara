@@ -1,5 +1,5 @@
 class TableClass {
-  int id;
+  String id;
   bool occupied;
 
   TableClass({this.id, this.occupied});

@@ -12,7 +12,7 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-enum Status { firstPage, secondPage, terrace }
+enum Status { firstPage, secondPage, terrace, delivery, uber }
 
 class _MainPageState extends State<MainPage> {
   Status page = Status.firstPage;
@@ -30,10 +30,15 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: Colors.blue,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text(
-            '''Nara Lounge        
+          title: GestureDetector(
+            onTap: () => setState(() {
+              this.page = Status.firstPage;
+            }),
+            child: Text(
+              '''Nara Lounge        
 ${DateTime.now().toString().substring(0, 10)} ''',
-            style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           actions: [
             this.page == Status.terrace
@@ -47,8 +52,16 @@ ${DateTime.now().toString().substring(0, 10)} ''',
                           this.page = Status.terrace;
                         }),
                     'Terrace'),
-            TopBarButton(() => print('Delievery'), 'Delievery'),
-            TopBarButton(() => print('UberEats'), 'UberEats'),
+            TopBarButton(
+                () => setState(() {
+                      this.page = Status.delivery;
+                    }),
+                'Delievery'),
+            TopBarButton(
+                () => setState(() {
+                      this.page = Status.uber;
+                    }),
+                'UberEats'),
           ],
           backgroundColor: Colors.black87,
         ),
@@ -77,7 +90,7 @@ ${DateTime.now().toString().substring(0, 10)} ''',
             children: List.generate(15, (index) {
               return TableWidget(
                   table: new TableClass(
-                      id: index + 1, occupied: (index + 1) % 3 == 0));
+                      id: "T" + (index + 1).toString(), occupied: false));
             }),
           ),
         ),
@@ -131,7 +144,7 @@ ${DateTime.now().toString().substring(0, 10)} ''',
             children: List.generate(15, (index) {
               return TableWidget(
                   table: new TableClass(
-                      id: index + 16, occupied: (index + 1) % 4 == 0));
+                      id: "T" + (index + 16).toString(), occupied: false));
             }),
           ),
         )
@@ -144,7 +157,11 @@ ${DateTime.now().toString().substring(0, 10)} ''',
       case Status.secondPage:
         return buildSecondPage();
       case Status.terrace:
-        return Text("This is Terrace");
+        return Text("This is Terrace Page");
+      case Status.delivery:
+        return Text("This is Delievery Page");
+      case Status.uber:
+        return Text("This is Uber Page");
       default:
         return buildFristPage();
     }

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:nara/models/contentOrderItem.dart';
 
 class Order {
-  int table;
+  String table;
   List<ContentOrderItem> orderItems = [];
   String comment;
   String owner;

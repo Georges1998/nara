@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -94,34 +92,62 @@ class _TablePageState extends State<TablePage> {
                     borderRadius: BorderRadius.circular(20),
                     color: Color.fromRGBO(255, 255, 255, 0.5)),
                 width: MediaQuery.of(context).size.width * 0.35,
-                child: Expanded(
-                  child: ListView(shrinkWrap: true, children: [
-                    for (var i in orderedItems)
-                      Container(
-                          color: Color.fromRGBO(255, 255, 255, 0.5),
-                          padding: EdgeInsets.all(20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(i.itemName),
-                              Text(i.quantity.toString()),
-                              IconButton(
-                                icon: Icon(Icons.remove),
-                                color: Colors.deepPurpleAccent,
-                                iconSize: 30,
-                                onPressed: () => removeOrder(i),
-                              ),
-                              IconButton(
-                                icon: Icon(i.comment == null
-                                    ? Icons.edit
-                                    : Icons.comment),
-                                color: Colors.deepPurpleAccent,
-                                iconSize: 30,
-                                onPressed: () => addComment(i),
-                              ),
-                            ],
-                          ))
-                  ]),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Center(
+                        child: Text(
+                          "Ordered Items",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w800),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      color: Colors.white,
+                      height: 60,
+                      width: double.infinity,
+                    ),
+                    Expanded(
+                      child: ListView(shrinkWrap: true, children: [
+                        for (var i in orderedItems)
+                          Container(
+                              color: Color.fromRGBO(255, 255, 255, 0.5),
+                              padding: EdgeInsets.all(20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    i.itemName,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  Text(
+                                    i.quantity.toString(),
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.remove),
+                                    color: Colors.deepPurpleAccent,
+                                    iconSize: 30,
+                                    onPressed: () => removeOrder(i),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(i.comment == null
+                                        ? Icons.edit
+                                        : Icons.comment),
+                                    color: Colors.deepPurpleAccent,
+                                    iconSize: 30,
+                                    onPressed: () => addComment(i),
+                                  ),
+                                ],
+                              ))
+                      ]),
+                    ),
+                  ],
                 ),
                 // color: Color.fromRGBO(255, 255, 255, 0.5),
               ),
@@ -178,25 +204,7 @@ class _TablePageState extends State<TablePage> {
                   return Expanded(
                     child: ListView(
                       shrinkWrap: true,
-                      children: [
-                        for (var i in snapshot.data)
-                          Container(
-                              color: Color.fromRGBO(255, 255, 255, 0.5),
-                              padding: EdgeInsets.all(20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(i.itemName),
-                                  IconButton(
-                                    icon: Icon(Icons.add),
-                                    color: Colors.deepPurpleAccent,
-                                    iconSize: 30,
-                                    onPressed: () => addToOrderedList(i),
-                                  )
-                                ],
-                              ))
-                      ],
+                      children: [for (var i in snapshot.data) buildMenuItem(i)],
                     ),
                   );
                   // return Text(snapshot.data.first.itemName);
@@ -217,6 +225,27 @@ class _TablePageState extends State<TablePage> {
         //color: Color.fromRGBO(255, 155, 255, 0.5),
       ),
     );
+  }
+
+  Container buildMenuItem(Menu i) {
+    return Container(
+        color: Color.fromRGBO(255, 255, 255, 0.5),
+        padding: EdgeInsets.all(20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              i.itemName,
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+            ),
+            IconButton(
+              icon: Icon(Icons.add),
+              color: Colors.deepPurpleAccent,
+              iconSize: 30,
+              onPressed: () => addToOrderedList(i),
+            )
+          ],
+        ));
   }
 
   addToOrderedList(Menu i) {
