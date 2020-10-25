@@ -14,4 +14,11 @@ class AddOns {
       itemName: json['itemName'],
     );
   }
+
+   Map<String, dynamic> toJson() => {
+        'id': id.toString(),
+        'price': price.toString(),
+        'quantity': quantity.toString(),
+        'itemName': itemName,
+      };
 }

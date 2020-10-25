@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:nara/models/addOns.dart';
 import 'package:nara/models/menu.dart';
+import 'package:nara/models/order.dart';
 
 class HttpServices {
   static Future<List<AddOns>> fetchAddOns() async {
@@ -37,5 +38,20 @@ class HttpServices {
     } else {
       throw Exception('Failed to load addOns');
     }
+  }
+
+  static Future<Order> sendOrder(Order order) async {
+    String json = jsonEncode(order);
+    final http.Response response = await http.post(
+      'https://naraapi.azurewebsites.net/Order',
+      body: json,
+    );
+    print(json);
+    print(response.statusCode);
+    // if (response.statusCode == 200) {
+    //   return Order.fromJson(jsonDecode(response.body));
+    // } else {
+    //   throw Exception('Failed to create Order');
+    // }
   }
 }

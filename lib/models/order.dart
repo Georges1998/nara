@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:nara/models/contentOrderItem.dart';
 
 class Order {
@@ -17,4 +19,11 @@ class Order {
       owner: json['owner'],
     );
   }
+  Map<String, dynamic> toJson() => {
+        'table': table,
+        'orderItems': jsonEncode(orderItems),
+        'comment': comment,
+        'owner': owner,
+        'date': date.toString(),
+      };
 }

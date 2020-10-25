@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:nara/models/addOns.dart';
 
 class ContentOrderItem {
@@ -16,4 +18,10 @@ class ContentOrderItem {
       itemName: json['itemName'],
     );
   }
+  Map<String, dynamic> toJson() => {
+        'quantity': quantity.toString(),
+        'addOns': jsonEncode(addOns),
+        'comment': comment,
+        'itemName': itemName,
+      };
 }
