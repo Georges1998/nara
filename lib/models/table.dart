@@ -1,6 +1,7 @@
 class TableClass {
   String id;
-  bool occupied;
+  String key;
+  String type;
 
-  TableClass({this.id, this.occupied});
+  TableClass({this.id, this.key, this.type});
 }

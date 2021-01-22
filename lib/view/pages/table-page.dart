@@ -234,9 +234,20 @@ class _TablePageState extends State<TablePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              i.itemName,
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+            Container(
+              width: 140,
+              child: Text(
+                i.itemName,
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+              ),
+            ),
+            Container(
+              width: 150,
+              alignment: AlignmentDirectional(1.0, 0.0),
+              child: Text(
+                'Price: ' + i.price.toString(),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+              ),
             ),
             IconButton(
               icon: Icon(Icons.add),

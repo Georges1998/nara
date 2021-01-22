@@ -90,7 +90,9 @@ ${DateTime.now().toString().substring(0, 10)} ''',
             children: List.generate(15, (index) {
               return TableWidget(
                   table: new TableClass(
-                      id: "T" + (index + 1).toString(), occupied: false));
+                      id: "T" + (index + 1).toString(),
+                      key: "T" + (index + 1).toString(),
+                      type: 'inside'));
             }),
           ),
         ),
@@ -110,6 +112,72 @@ ${DateTime.now().toString().substring(0, 10)} ''',
           ),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50), color: Colors.black87),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTerrace() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(top: 10.0),
+          width: 800,
+          child: GridView.count(
+            crossAxisCount: 5,
+            children: List.generate(15, (index) {
+              return TableWidget(
+                  table: new TableClass(
+                      id: "S" + (index + 1).toString(),
+                      key: "S" + (index + 1).toString(),
+                      type: 'terrace'));
+            }),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildUber() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(top: 10.0),
+          width: 800,
+          child: GridView.count(
+            crossAxisCount: 5,
+            children: List.generate(15, (index) {
+              return TableWidget(
+                  table: new TableClass(
+                      id: "U" + (index + 1).toString(),
+                      key: "U" + (index + 1).toString(),
+                      type: 'uber'));
+            }),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildDelievery() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(top: 10.0),
+          width: 800,
+          child: GridView.count(
+            crossAxisCount: 5,
+            children: List.generate(15, (index) {
+              return TableWidget(
+                  table: new TableClass(
+                      id: "D" + (index + 1).toString(),
+                      key: "D" + (index + 1).toString(),
+                      type: 'delievery'));
+            }),
+          ),
         ),
       ],
     );
@@ -144,7 +212,9 @@ ${DateTime.now().toString().substring(0, 10)} ''',
             children: List.generate(15, (index) {
               return TableWidget(
                   table: new TableClass(
-                      id: "T" + (index + 16).toString(), occupied: false));
+                      id: "T" + (index + 16).toString(),
+                      key: "T" + (index + 16).toString(),
+                      type: 'inside'));
             }),
           ),
         )
@@ -157,11 +227,11 @@ ${DateTime.now().toString().substring(0, 10)} ''',
       case Status.secondPage:
         return buildSecondPage();
       case Status.terrace:
-        return Text("This is Terrace Page");
+        return buildTerrace();
       case Status.delivery:
-        return Text("This is Delievery Page");
+        return buildDelievery();
       case Status.uber:
-        return Text("This is Uber Page");
+        return buildUber();
       default:
         return buildFristPage();
     }

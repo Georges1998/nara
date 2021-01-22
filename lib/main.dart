@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nara/view/pages/main-page.dart';
+import 'package:nara/view/pages/pay-page.dart';
 import 'package:nara/view/pages/table-page.dart';
 
 void main() {
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         routes: {
           MainPage.routeName: (context) => MainPage(),
           TablePage.routeName: (context) => TablePage(),
+          PayPage.routeName: (context) => PayPage(),
         },
         title: 'Nara');
   }

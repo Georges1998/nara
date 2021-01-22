@@ -10,7 +10,7 @@ class HttpServices {
     List<AddOns> addOns = [];
 
     final response = await http.get(
-      'https://naraapi.azurewebsites.net/AddOnMenu',
+      'https://eliassco.azurewebsites.net/AddOnMenu',
     );
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
@@ -23,7 +23,7 @@ class HttpServices {
 
   static Future<List<Menu>> fetchMenu({String type}) async {
     List<Menu> menu = [];
-    String endpoint = 'https://naraapi.azurewebsites.net/Menu';
+    String endpoint = 'https://eliassco.azurewebsites.net/Menu';
     if (type != null) {
       endpoint = endpoint + '?Types=' + type;
     }
@@ -43,7 +43,7 @@ class HttpServices {
   static Future<Order> sendOrder(Order order) async {
     String json = jsonEncode(order);
     final http.Response response = await http.post(
-      'https://naraapi.azurewebsites.net/Order',
+      'https://eliassco.azurewebsites.net/Order',
       body: json,
     );
     print(json);
