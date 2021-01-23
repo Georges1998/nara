@@ -374,9 +374,8 @@ class _PayPageState extends State<PayPage> {
         comment: '',
         owner: 'George',
         table: this.table.id,
-        orderItems: this.orderedItems,
-        date: DateTime.now());
+        orderItems: this.orderedItems);
     HttpServices.sendOrder(order);
-    print("object");
+    print(order.toString());
   }
 }

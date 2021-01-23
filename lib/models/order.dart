@@ -7,9 +7,8 @@ class Order {
   List<ContentOrderItem> orderItems = [];
   String comment;
   String owner;
-  DateTime date;
 
-  Order({this.table, this.date, this.owner, this.orderItems, this.comment});
+  Order({this.table, this.owner, this.orderItems, this.comment});
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
@@ -21,9 +20,8 @@ class Order {
   }
   Map<String, dynamic> toJson() => {
         'table': table,
-        'orderItems': jsonEncode(orderItems),
-        'comment': comment,
+        'orderItems': orderItems.map((e) => e.toJson()).toList(),
+        'comment': comment == null ? "" : comment,
         'owner': owner,
-        'date': date.toString(),
       };
 }

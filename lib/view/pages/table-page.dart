@@ -7,6 +7,7 @@ import 'package:nara/models/menu.dart';
 import 'package:nara/models/order.dart';
 import 'package:nara/models/table.dart';
 import 'package:nara/services/httpServices.dart';
+import 'package:flutter/services.dart';
 
 class TablePage extends StatefulWidget {
   static String routeName = "/tablePage";
@@ -373,10 +374,9 @@ class _TablePageState extends State<TablePage> {
     var order = new Order(
         comment: '',
         owner: 'George',
-        table: this.table.id,
-        orderItems: this.orderedItems,
-        date: DateTime.now());
+        table: this.table.key,
+        orderItems: this.orderedItems);
     HttpServices.sendOrder(order);
-    print("object");
+    Clipboard.setData(new ClipboardData(text: "your text"));
   }
 }

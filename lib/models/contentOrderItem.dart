@@ -7,6 +7,7 @@ class ContentOrderItem {
   List<AddOns> addOns = [];
   String comment;
   String itemName;
+  int paid = 0;
 
   ContentOrderItem({this.itemName, this.quantity, this.addOns, this.comment});
 
@@ -19,9 +20,10 @@ class ContentOrderItem {
     );
   }
   Map<String, dynamic> toJson() => {
-        'quantity': quantity.toString(),
-        'addOns': jsonEncode(addOns),
-        'comment': comment,
+        'quantity': quantity,
+        'addOns': addOns != null ? addOns.map((e) => e.toJson()).toList() : [],
+        'comment': comment == null ? null : comment,
         'itemName': itemName,
+        'paid': paid,
       };
 }
