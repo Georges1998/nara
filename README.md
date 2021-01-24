@@ -1,16 +1,31 @@
 # nara
 
-A new Flutter project.
+Cross-platform mobile application to manage a local montreal restaurant Nara. 
 
-## Getting Started
+This project was generated with **Flutter** and **.Net** 
 
-This project is a starting point for a Flutter application.
+Database hosted by: Azure
 
-A few resources to get you started if this is your first Flutter project:
+## Some Features 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+1. Display the restaurant's tables and manage their status. 
+2. Track orders and send them to the kitchen to be printed.
+3. Manages inventory. 
+4. Allow customers to pay through the app.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Routes Snapshot
+
+<img width="1440" alt="Screen Shot 2021-01-23 at 9 07 57 PM" src="https://user-images.githubusercontent.com/46607090/105619788-ed873880-5dc3-11eb-9089-e489fb7864bc.png">
+
+## UI
+
+### Main Page:
+![image](https://user-images.githubusercontent.com/46607090/105619846-a2215a00-5dc4-11eb-9a01-0314abe5ade9.png)
+
+### Menu List Page: 
+![image](https://user-images.githubusercontent.com/46607090/105619931-718df000-5dc5-11eb-9629-68bfe83bd7e4.png)
+![image](https://user-images.githubusercontent.com/46607090/105619967-b74ab880-5dc5-11eb-856f-a4c8cfcddcc3.png)
+
+### Pay Page:
+![image](https://user-images.githubusercontent.com/46607090/105619985-dcd7c200-5dc5-11eb-9586-bc6329bc0ad7.png)
+
