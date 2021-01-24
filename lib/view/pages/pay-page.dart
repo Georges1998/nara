@@ -20,6 +20,8 @@ class PayPage extends StatefulWidget {
 class _PayPageState extends State<PayPage> {
   Future<List<AddOns>> futurAddOns;
   Future<List<Menu>> futureMenu;
+  Future<List<ContentOrderItem>> futureOrders;
+
   String menueType = 'Sandwiches';
   List<ContentOrderItem> orderedItems = [];
   final _formKey = GlobalKey<FormState>();
@@ -30,9 +32,7 @@ class _PayPageState extends State<PayPage> {
   void initState() {
     super.initState();
     getMenu();
-    futureMenu.then((value) => value.forEach((element) {
-          print(element.itemName);
-        }));
+
     futurAddOns = HttpServices.fetchAddOns();
     futurAddOns.then((value) => value.forEach((element) {
           print(element.id);
@@ -49,6 +49,7 @@ class _PayPageState extends State<PayPage> {
   Widget build(BuildContext context) {
     final TableClass table = ModalRoute.of(context).settings.arguments;
     this.table = table;
+    getOrders(table.key);
     return Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
@@ -56,9 +57,9 @@ class _PayPageState extends State<PayPage> {
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: GestureDetector(
-                child: Text("Done",
+                child: Text("Pay",
                     style: TextStyle(color: Colors.white, fontSize: 30)),
-                onTap: () => sendOrder(),
+                onTap: () => payOrder(table.key),
               ),
             ),
           ],
@@ -83,7 +84,7 @@ class _PayPageState extends State<PayPage> {
         ),
         child: Row(
           children: [
-            // buildMenu(context),
+            buildOrderList(context),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
@@ -97,7 +98,7 @@ class _PayPageState extends State<PayPage> {
                     Container(
                       child: Center(
                         child: Text(
-                          "Ordered Items",
+                          "Pay",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w800),
                           textAlign: TextAlign.center,
@@ -135,14 +136,6 @@ class _PayPageState extends State<PayPage> {
                                     iconSize: 30,
                                     onPressed: () => removeOrder(i),
                                   ),
-                                  IconButton(
-                                    icon: Icon(i.comment == null
-                                        ? Icons.edit
-                                        : Icons.comment),
-                                    color: Colors.deepPurpleAccent,
-                                    iconSize: 30,
-                                    onPressed: () => addComment(i),
-                                  ),
                                 ],
                               ))
                       ]),
@@ -158,7 +151,7 @@ class _PayPageState extends State<PayPage> {
     );
   }
 
-  Padding buildMenu(BuildContext context) {
+  Padding buildOrderList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -170,41 +163,24 @@ class _PayPageState extends State<PayPage> {
             Container(
               color: Colors.white,
               height: 60,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  for (var i in [
-                    "Sandwiches",
-                    "Shisha",
-                    "Desert",
-                    "Meal",
-                    "Drinks",
-                    "Breakfast"
-                  ])
-                    FlatButton(
-                      onPressed: () => {
-                        setState(() {
-                          this.menueType = i;
-                          getMenu();
-                          print(this.menueType);
-                        })
-                      },
-                      child: Text(
-                        i,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                ],
+              child: Center(
+                child: Text(
+                  "Ordered Items ",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            FutureBuilder<List<Menu>>(
-              future: futureMenu,
+            FutureBuilder<List<ContentOrderItem>>(
+              future: futureOrders,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Expanded(
                     child: ListView(
                       shrinkWrap: true,
-                      children: [for (var i in snapshot.data) buildMenuItem(i)],
+                      children: [
+                        for (var i in snapshot.data) buildOrderItem(i)
+                      ],
                     ),
                   );
                   // return Text(snapshot.data.first.itemName);
@@ -227,7 +203,13 @@ class _PayPageState extends State<PayPage> {
     );
   }
 
-  Container buildMenuItem(Menu i) {
+  void getOrders(String tableKey) {
+    setState(() {
+      futureOrders = HttpServices.fetchOrder(tableKey);
+    });
+  }
+
+  Container buildOrderItem(ContentOrderItem i) {
     return Container(
         color: Color.fromRGBO(255, 255, 255, 0.5),
         padding: EdgeInsets.all(20),
@@ -242,10 +224,17 @@ class _PayPageState extends State<PayPage> {
               ),
             ),
             Container(
+              width: 20,
+              child: Text(
+                i.quantity.toString(),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+              ),
+            ),
+            Container(
               width: 150,
               alignment: AlignmentDirectional(1.0, 0.0),
               child: Text(
-                'Price: ' + i.price.toString(),
+                'Paid: ' + i.paid.toString(),
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
               ),
             ),
@@ -259,14 +248,16 @@ class _PayPageState extends State<PayPage> {
         ));
   }
 
-  addToOrderedList(Menu i) {
+  addToOrderedList(ContentOrderItem i) {
     ContentOrderItem s =
         new ContentOrderItem(itemName: i.itemName, quantity: 1);
     bool exist = false;
     setState(() {
       orderedItems.forEach((element) {
         if (element.itemName == s.itemName) {
-          element.quantity = element.quantity + 1;
+          if (element.quantity < i.quantity) {
+            element.quantity = element.quantity + 1;
+          }
           exist = true;
         }
       });
@@ -343,18 +334,22 @@ class _PayPageState extends State<PayPage> {
     });
   }
 
-  sendOrder() {
+  payOrder(String key) {
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Send Order?"),
+            title: Text("Pay?"),
             actions: [
               FlatButton(
                 child: Text('Yes'),
                 onPressed: () {
                   sendRequest();
+                  // getOrders(key);
+                  setState(() {
+                    this.orderedItems = [];
+                  });
                   Navigator.of(context).pop();
                 },
               ),
@@ -369,13 +364,10 @@ class _PayPageState extends State<PayPage> {
         });
   }
 
+//TODO: send request
   void sendRequest() {
-    var order = new Order(
-        comment: '',
-        owner: 'George',
-        table: this.table.id,
-        orderItems: this.orderedItems);
-    HttpServices.sendOrder(order);
-    print(order.toString());
+    print(this.table.key);
+    HttpServices.payOrder(this.orderedItems, this.table.key)
+        .then((value) => getOrders(this.table.key));
   }
 }

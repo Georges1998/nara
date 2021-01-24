@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:nara/models/contentOrderItem.dart';
 
 class Order {

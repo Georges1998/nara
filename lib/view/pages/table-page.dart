@@ -293,7 +293,6 @@ class _TablePageState extends State<TablePage> {
                   child: Text('Done'),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    sendRequest();
                   },
                 ),
               ],
@@ -356,6 +355,7 @@ class _TablePageState extends State<TablePage> {
                 child: Text('Yes'),
                 onPressed: () {
                   sendRequest();
+                  Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
               ),
